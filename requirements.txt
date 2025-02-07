@@ -1,0 +1,5 @@
+streamlit
+pandas
+streamlit_date_picker
+stqdm
+requests

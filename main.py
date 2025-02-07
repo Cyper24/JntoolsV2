@@ -2,6 +2,7 @@ import streamlit as st
 
 st.set_page_config(layout="wide",
                    initial_sidebar_state="auto",)
+
 with st.sidebar:
         ato = st.text_input("Input AuthToken","",key="ato")
 

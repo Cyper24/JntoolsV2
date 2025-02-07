@@ -10,7 +10,6 @@ pages = {
         st.Page("dashboard.py", title="Dashboard", icon=":material/home:"),
     ],
     "Tools": [
-        st.Page("manifest.py", title="Manifest",icon=":material/menu:"),
         st.Page("allnew.py", title="Pencarian Status Terupdate",icon=":material/menu:"),
         st.Page("tidaksampai.py", title="Monitor Paket Tidak Sampai",icon=":material/menu:"),
         st.Page("loadunload.py", title="Load Unload Kode Tugas",icon=":material/menu:"),

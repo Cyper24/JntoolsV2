@@ -23,7 +23,7 @@ pages = {
     "Monitoring": [
         st.Page("allnew.py", title="Pencarian Status Terupdate",icon=":material/menu:"),
         st.Page("tidaksampai.py", title="Monitor Paket Tidak Sampai",icon=":material/menu:"),
-        st.Page("loadunload.py", title="Load Unload Kode Tugas",icon=":material/menu:"),
+        st.Page("loadtjuankt.py", title="Load Tujuan KT",icon=":material/menu:"),
         st.Page("mntrkirim.py", title="Monitor Kirim Outgoing",icon=":material/menu:"),
 
     ],
@@ -31,7 +31,6 @@ pages = {
         st.Page("manifest.py", title="Manifest",icon=":material/menu:"),
         st.Page("reportinc.py", title="Report Harian Inc",icon=":material/menu:"),
         st.Page("reportout.py", title="Report Harian Out",icon=":material/menu:"),
-        # st.Page("reportrtdms.py", title="Repo",icon=":material/menu:"),
     ],
 }
 if response.status_code == 200:

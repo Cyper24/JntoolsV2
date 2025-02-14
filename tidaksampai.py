@@ -3,7 +3,6 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
 from streamlit_date_picker import date_range_picker, date_picker, PickerType
-from stqdm import stqdm
 import time
 
 at=(st.session_state.ato).strip(" ")
@@ -50,7 +49,6 @@ if st.button("Cari"):
     l = int(len(rjson["data"]["records"]))
     s = rjson["data"]["total"]
     f = rjson["data"]["records"][0:l]
-    pbar = stqdm(total=s)
     for gw in f:
         billCode = gw["billcode"]
         # urltrack = "https://jmsgw.jntexpress.id/operatingplatform/podTracking/inner/query/keywordList"
@@ -78,7 +76,6 @@ if st.button("Cari"):
                 "Lokasi Selanjutnya":nextStationName,"Discan Oleh":scanuser,"Layanan":expressTypeName}
         list2.append(final)
         # time.sleep(0.1)
-        pbar.update(1)
     st.caption("Result :")
     df = pd.DataFrame(list2)
     st.dataframe(df,hide_index=True)

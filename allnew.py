@@ -95,15 +95,19 @@ try:
             receiverProvinceName = x["receiverProvinceName"]
             expressTypeName = x["expressTypeName"]
             final = {'No.Waybill' : awb,'Nomor_Bagging':packageCode,'Jenis_Scan':scanType,'Waktu_Scan' :scanTime,
-                    "Discan_Oleh":scanUser,'Lokasi Sebelumnya / Berikutnya': previousOrNextSiteCode,
+                    "Discan_Oleh":scanUser,'Lokasi_Sebelumnya_Berikutnya': previousOrNextSiteCode,
                     'Tujuan' :destinationName,"Provinsi Tujuan" :receiverProvinceName,
                     "NLC":nineCharCode,"Jenis Layanan":expressTypeName}
             list.append(final)
         st.caption("Result :")
         df = pd.DataFrame(list)
-        on = st.toggle("Filter Dlg")
-        if on:
+        dlg = st.toggle("Filter Dlg")
+        if dlg:
             df = df[df["Discan_Oleh"].str.contains('Pb Maret 03|Pb Maret 05|Pb Maret 06|Pb Maret 15|Pb Maret 16|Kr_rohmad|dlg')==False]
+        gw = st.toggle("Filter GW")
+        if gw:
+            df = df[df["Lokasi_Sebelumnya_Berikutnya"].str.contains('GATEWAY|CENTER')==False]
+
         st.dataframe(df,hide_index=True)
         st.caption(f"{len(df.index)}" + " Data")
 except:

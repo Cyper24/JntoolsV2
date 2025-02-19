@@ -29,6 +29,8 @@ try:
     rjson= response.json()
     un = rjson["data"]["records"][0]["receiveUserName"]
     st.header("Welcome " + un)
+    if st.button("Clear Cache"):
+         st.cache_data.clear()
 except:
     st.caption("Input Valid AuthToken ")
 

@@ -32,7 +32,7 @@ def jmlahkt():
     start,end = tgl()
     payload = {
         "current": 1,
-        "size": 30000,
+        "size": 50000,
         "billType": 4,
         "startDates": start,
         "endDates": end,
@@ -54,14 +54,23 @@ def jmlahkt():
     for x in rjson["data"]["records"]:
         upOrNextStation=x["upOrNextStation"]
         billNo=x["billNo"]
-        final = {'Lokasi_Selanjutnya' : upOrNextStation,"No_Waybill":billNo}
+        belongNo=x["belongNo"]
+        scanEmp=x["scanEmp"]
+        scanDate=x["scanDate"]
+        final = {"NoWaybill":billNo,"No_Bagging":belongNo,'LokasiSelanjutnya' : upOrNextStation,"Id_Scan":scanEmp,"Waktu_Scan":scanDate}
         list.append(final)
+
 
 if st.button("Exec..."):
     jmlahkt()
-    st.caption("Result :")
     df = pd.DataFrame(list)
-    table = pd.pivot_table(df, values='No_Waybill', index=['Lokasi_Selanjutnya'],columns=['Lokasi_Selanjutnya'], aggfunc="count", fill_value=" ")
-    st.dataframe(table,hide_index=True)
-    st.text("Total Load : " + f"{len(df.index)}" + " Data")
+    col1, col2 = st.columns([3, 2])
+    with col1:
+        st.caption("Result :")
+        st.dataframe(df,hide_index=True)
+    with col2:
+        st.caption("Result :")
+        table = pd.pivot_table(df, values='NoWaybill',columns=['LokasiSelanjutnya'], aggfunc="count", fill_value=" ")
+        st.dataframe(table,hide_index=True)
+        st.text("Total Load : " + f"{len(df.index)}" + " Data")
 

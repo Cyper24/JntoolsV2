@@ -5,14 +5,10 @@ import pandas as pd
 import requests
 
 
-
-list2 = []
-
-
 at=(st.session_state.ato).strip(" ")
 st.title("Pencarian Status Terupdate ")
 
-default_start, default_end = datetime.now().replace(hour=0, minute=0, second=0), datetime.now().replace(hour=23, minute=59, second=59) + timedelta(days=1)
+default_start, default_end = datetime.now().replace(hour=0, minute=0, second=0)- timedelta(days=1), datetime.now().replace(hour=23, minute=59, second=59) 
 col1, col2,col3 = st.columns([3, 1, 2])
 with col1:
     date_range_string = date_range_picker(picker_type=PickerType.time,
@@ -23,8 +19,6 @@ with col1:
     else:
         start = " "
         end = " "
-
-
 
 with col2:
     option = st.selectbox(
@@ -73,8 +67,25 @@ headers = {
     "langtype": "ID"
 }
 
-try:
-    
+@st.cache_data
+def dframe():
+    try:
+        df = pd.DataFrame(list)
+        if dlg:
+            df = df[df["Discan_Oleh"].str.contains('Pb Maret 03|Pb Maret 05|Pb Maret 06|Pb Maret 15|Pb Maret 16|Kr_rohmad|dlg')==False]
+        if gw:
+            df = df[df["Lokasi_Sebelumnya_Berikutnya"].str.contains('GATEWAY|CENTER')==False]
+        st.dataframe(df,hide_index=True)
+        st.caption(f"{len(df.index)}" + " Data")
+    except:
+        False
+
+dlg = st.toggle("Filter Dlg")
+gw = st.toggle("Filter GW")
+
+
+if st.button("Cari"):
+    st.cache_data.clear()
     list = []
     url = "https://jmsgw.jntexpress.id/operatingplatform/waybill/pageQueryLastStatus"
     if option == "---":
@@ -99,16 +110,9 @@ try:
                     'Tujuan' :destinationName,"Provinsi Tujuan" :receiverProvinceName,
                     "NLC":nineCharCode,"Jenis Layanan":expressTypeName}
             list.append(final)
+        
         st.caption("Result :")
-        df = pd.DataFrame(list)
-        dlg = st.toggle("Filter Dlg")
-        if dlg:
-            df = df[df["Discan_Oleh"].str.contains('Pb Maret 03|Pb Maret 05|Pb Maret 06|Pb Maret 15|Pb Maret 16|Kr_rohmad|dlg')==False]
-        gw = st.toggle("Filter GW")
-        if gw:
-            df = df[df["Lokasi_Sebelumnya_Berikutnya"].str.contains('GATEWAY|CENTER')==False]
+        
+dframe()
 
-        st.dataframe(df,hide_index=True)
-        st.caption(f"{len(df.index)}" + " Data")
-except:
-    False
+

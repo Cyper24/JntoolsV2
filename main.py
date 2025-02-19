@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+
 st.set_page_config(layout="wide",
                    initial_sidebar_state="auto",)
 
@@ -21,6 +22,7 @@ pages = {
         st.Page("dashboard.py", title="Dashboard", icon=":material/home:"),
     ],
     "Monitoring": [
+        st.Page("penjadwalan.py", title="Cek Load Penjadwalan KT",icon=":material/menu:"),
         st.Page("allnew.py", title="Pencarian Status Terupdate",icon=":material/menu:"),
         st.Page("tidaksampai.py", title="Monitor Paket Tidak Sampai",icon=":material/menu:"),
         st.Page("loadtjuankt.py", title="Load Tujuan KT",icon=":material/menu:"),
@@ -38,3 +40,4 @@ if response.status_code == 200:
     pg.run()
 else:
     st.caption("Enter Valid AuthToken")
+    

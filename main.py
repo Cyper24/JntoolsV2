@@ -27,6 +27,8 @@ pages = {
         st.Page("tidaksampai.py", title="Monitor Paket Tidak Sampai",icon=":material/menu:"),
         st.Page("loadtjuankt.py", title="Load Tujuan KT",icon=":material/menu:"),
         st.Page("mntrkirim.py", title="Monitor Kirim Outgoing",icon=":material/menu:"),
+        st.Page("mntrbagging.py", title="Monitor Bagging",icon=":material/menu:"),
+        st.Page("antri.py", title="Antrian",icon=":material/menu:"),
 
     ],
     "Report Harian": [

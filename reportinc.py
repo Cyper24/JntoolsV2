@@ -46,6 +46,7 @@ if st.button("Cari"):
         shipmentNo = x["shipmentNo"]
         lineName = x["lineName"]
         loadCount = x["loadCount"]
+        unLoadCount=x["unLoadCount"]
         actualVehicleTypegroup = x["actualVehicleTypegroup"]
         carrierName = x["carrierName"]
         plannedDepartureTime = x["plannedDepartureTime"]
@@ -53,7 +54,7 @@ if st.button("Cari"):
         plannedArrivalTime = x["plannedArrivalTime"]
         actualArrivalTime = x["actualArrivalTime"]
         shifts = x["shifts"]
-        final = {'kode Tugas' : shipmentNo,'Rute' : lineName,'Load' : loadCount,'Tipe Armada' : actualVehicleTypegroup,'Vendor' : carrierName,
+        final = {'kode Tugas' : shipmentNo,'Rute' : lineName,'Load' : loadCount,'Unload':unLoadCount,'Tipe Armada' : actualVehicleTypegroup,'Vendor' : carrierName,
                  'Perencanaan Waktu Keberangkatan (CUT OFF)' : plannedDepartureTime,'Keberangkatan Aktual Mobil' : actualDepartureTime,'Rencanakan Waktu Kedatangan' : plannedArrivalTime,
                  'Waktu aktual kedatangan Mobil' : actualArrivalTime,'Rit' : shifts}
         list.append(final)

@@ -29,6 +29,7 @@ pages = {
         st.Page("mntrkirim.py", title="Monitor Kirim Outgoing",icon=":material/menu:"),
         st.Page("mntrbagging.py", title="Monitor Bagging",icon=":material/menu:"),
         st.Page("antri.py", title="Antrian",icon=":material/menu:"),
+        st.Page("antrikota.py", title="Antrian Kota",icon=":material/menu:"),
 
     ],
     "Report Harian": [

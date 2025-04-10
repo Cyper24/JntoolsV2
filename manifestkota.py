@@ -8,14 +8,14 @@ import pythoncom
 import time
 from openpyxl.drawing.image import Image
 import subprocess
-
+import pandas as pd
 folder = os.getcwd()
 
 at=(st.session_state.ato).strip(" ")
 st.title("Manifest Kota")
 txt = st.text_area("Input Id Kode Tugas",)
 lines = txt.split("\n")
-
+rekap = []
 if st.button("Exec"):
     for kt in lines:
             url = "https://jmsgw.jntexpress.id/transportation/tmsnewBranchShipment/detail"
@@ -40,12 +40,15 @@ if st.button("Exec"):
             maintgl = dt.strftime('%d/%m/%Y')
             jamber = dt.strftime('%H:%M')
             jdl = f"SOC{endCode}0{shifts}/{dtjdl}EZ"
+            djmctk = dt - timedelta(minutes=15)
+            jmctk = djmctk.strftime('%H:%M')
+            rekaptgl = dt.strftime('%d-%m-%Y')
             if carrierName == "PT. PILAR PRIMA NUSANTARA" or carrierName == "PT. SERASI AUTORAYA":
                 carrierName = "KABUL"
             if carrierName == "PT. JET TRANSPORT SERVICES":
                 carrierName = "JTS"
 
-            if endCode == "TCSOC041" and "01" in jamber:
+            if endCode == "TCSOC041" and "01" or "00:00" in jamber:
                 endCode = "TCSOC041_SAMPANGAN_SOLO"
             if endCode == "TCSOC041":
                 endCode = "TCSOC041_JAGALAN"
@@ -84,17 +87,24 @@ if st.button("Exec"):
             sheet["J15"] = shipmentNo
             sheet["A16"] = f"SHUTTLE VENDOR {carrierName}"
             wb.save(filename="kota2.xlsx")
-
+            final = {'No Sj' : jdl,"Tanggal Operasi":rekaptgl,"Nama Rute":endCode,"Nopol":plateNumber,"Jenis Mobil":actualVehicleTypegroup,"Trip":shifts,
+                     "Tanggal Keberangkatan":rekaptgl,"Jam":jamber,"Koli":"Koli","Ecer":"Ecer","Jam Cetak":jmctk,"Layanan":"EZ","Admin":"Pamungkas/WIJANARKO","Vendor":carrierName,"KT":shipmentNo}
             path = os.path.join(folder , "kota2.xlsx")
             excel = client.Dispatch("Excel.Application",pythoncom.CoInitialize())
             sheets2 = excel.Workbooks.Open(path)
 
-            pdf_path = os.path.join(folder,f"{endCode}.pdf")
+            pdf_path = os.path.join(folder,f"{endCode} - {shipmentNo}.pdf")
             work_sheets = sheets2.Worksheets[0]
             work_sheets.ExportAsFixedFormat(0, pdf_path)
 
             sheets2.application.displayalerts = False
             sheets2.Close()
             st.text(f"{kt} - {shipmentNo} DONE")
-            subprocess.Popen([f"{endCode}.pdf"],shell=True)
+            rekap.append(final)
+            # subprocess.Popen([f"{endCode}.pdf"],shell=True)
             time.sleep(0.7)
+
+    st.caption("Result :")
+    df = pd.DataFrame(rekap)
+    st.dataframe(df,hide_index=True)
+    st.caption(f"{len(df.index)}" + " Data")

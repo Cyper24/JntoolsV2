@@ -24,11 +24,13 @@ if st.button("Cari"):
     url = "https://jmsgw.jntexpress.id/transportation/tmsBranchTrackingDetail/page"
     payload = {
         "current": 1,
-        "size": 100,
+        "size": 500,
         "startDepartureTime": f"{start}",
         "endDepartureTime": f"{end}",
         "startCode": "SOC999",
+        "shipmentState": 1,
         "countryId": "1"
+        
     }
     headers = {
         "cookie": "HWWAFSESID=a00e27f02785ef49ce5; HWWAFSESTIME=1738201375713",

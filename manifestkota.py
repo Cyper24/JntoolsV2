@@ -12,7 +12,7 @@ import pandas as pd
 folder = os.getcwd()
 
 at=(st.session_state.ato).strip(" ")
-st.title("Manifest Kota")
+st.title("Surat Jalan Kota")
 txt = st.text_area("Input Id Kode Tugas",)
 lines = txt.split("\n")
 rekap = []

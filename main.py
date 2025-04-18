@@ -33,6 +33,7 @@ pages = {
 
     ],
     "Report Harian": [
+        st.Page("bagging.py", title="Bagging",icon=":material/menu:"),
         st.Page("manifest.py", title="Manifest",icon=":material/menu:"),
         st.Page("manifestkota.py", title="Surat Jalan Kota",icon=":material/menu:"),
         st.Page("ktkota.py", title="Cek KT Kota",icon=":material/menu:"),

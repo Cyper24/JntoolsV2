@@ -14,6 +14,7 @@ at=(st.session_state.ato).strip(" ")
 st.title("Bagging")
 
 dp =[]
+
 tj = st.text_input("Cari Tujuan")
 
 url = "https://jmsgw.jntexpress.id/basicdata/network/select/all"
@@ -26,7 +27,7 @@ headers = {
 }
 
 def listdp():
-    querystring = {"current":"1","size":"50","name":tj,"queryLevel":"3"}
+    querystring = {"current":"1","size":"1000","name":tj,"queryLevel":"3"}
     response = requests.request("GET", url, headers=headers, params=querystring)
     r=response.json()
     f = r["data"]["records"]
@@ -100,9 +101,29 @@ def prin(jumlah,kodep,enNamep):
         doc.Close()
 
 listdp()
+
+
+
+ls = dp[0]
+
+if tj == "KAA":
+    ls = ["KAA03","KAA04","KAA05","KAA06","KAA08","KAA10","KAA11","KAA14","KAA15"]
+if tj == "SRN":
+    ls = ["SRN01","SRN02","SRN03","SRN04","SRN05","SRN06","SRN08","SRN10"]
+if tj == "BYL":
+    ls = ["BYL02","BYL03","BYL04","BYL05","BYL06","BYL07","BYL08","BYL09"]
+if tj == "WGI":
+    ls = ["WGI01","WGI03","WGI04","WGI05","WGI06","WGI07","WGI08","WGI11","WGI14"]
+if tj == "KLT":
+    ls = ["KLT02","KLT03","KLT04","KLT05","KLT06","KLT07","KLT08","KLT10","KLT11","KLT15"]
+if tj == "SUJ":
+    ls = ["SUJ02","SUJ03","SUJ04","SUJ08","SUJ09","SUJ10"]
+if tj == "SOC":
+    ls = ["SOC13","SOC17","SOC27","SOC05","SOC01"]
+
 options = st.multiselect(
     "Pilih Tujuan",
-    dp,
+    dp,ls
     )
 
 jmlah= st.number_input('Jumlah', min_value=1, value=1, step=1)
@@ -113,5 +134,14 @@ if st.button("Exec..."):
         r=response.json()
         f = r["data"]["records"]
         for x in f:
-            enName = x["enName"]
+            enName = x["name"]
         prin(jmlah,kode,enName)
+        
+# for kode in options:
+#         querystring = {"current":"1","size":"1","name":kode,"queryLevel":"3"}
+#         response = requests.request("GET", url, headers=headers, params=querystring)
+#         r=response.json()
+#         f = r["data"]["records"]
+#         for x in f:
+#             enName = x["name"]
+#             st.text(enName)
